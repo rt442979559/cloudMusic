@@ -22,5 +22,12 @@ export default {
             },
             context.commit('pause')
         }
+    },
+    //
+    isLoad(context){
+        context.commit('setLoad',true)
+        setTimeout(() => {
+            context.commit('setLoad',false)
+        }, 1000);
     }
 }

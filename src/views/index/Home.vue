@@ -100,6 +100,11 @@ export default {
     NewSong,
     Scroll
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs.scroll.scroll.refresh();
+    });
+  },
   activated() {
     this.$nextTick(() => {
       this.$refs.scroll.scroll.refresh();

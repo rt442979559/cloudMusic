@@ -22,14 +22,14 @@ export default {
   async created() {
     const {data: { result: res }} = await getPersonalizedNewSong();
     this.newSongList = res;
-    console.log(this.newSongList);
+    // console.log(this.newSongList);
 
     this.$nextTick(() => {
-      this.InitTabScroll();
+      this.initTabScroll();
     });
   },
   methods: {
-    InitTabScroll() {
+    initTabScroll() {
       let width = 0;
       for (let i = 0; i < this.newSongList.length; i++) {
                                                                 //8是margin

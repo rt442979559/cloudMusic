@@ -1,12 +1,6 @@
 <template>
   <div class="banners" v-if="Object.keys(banners).length !== 0">
     <div class="bannerbase">
-    <!-- <mt-swipe :auto="4000" class="bannerSwiper" >
-      <mt-swipe-item v-for="item in banners" class="swiperItem" :key="item.scm">
-        <a href="#"><img :src="item.imageUrl" alt="">
-        </a>
-      </mt-swipe-item>
-    </mt-swipe> -->
     <van-swipe :autoplay="4000" indicator-color="white" class="bannerSwiper">
       <van-swipe-item v-for="item in banners" :key="item.scm" class="swiperItem">
         <img :src="item.imageUrl" alt="">

@@ -10,7 +10,6 @@
       content
     </van-popup>
 
-
       <div class="navicon">
         <div class="navicon-warpper">
           <div class="nav-mine" @click="navmineClick(0)" :class="currentIndex==0?'':'inactive'">

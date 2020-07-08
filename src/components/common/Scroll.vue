@@ -59,15 +59,15 @@ export default {
             if(this.pullUpLoad){
                 this.scroll.on('pullingUp',() =>{
                     //上拉加载更多
-                    console.log('shangla');
-                    // this.$emit('pullingUp')
+                    // console.log('shangla');
+                    this.$emit('pullingUp')
                 })
             }
             if(this.pullDownLoad){
                 this.scroll.on('pullingDown',() =>{
                     //上拉加载更多
                     console.log('xiala');
-                    // this.$emit('pullingUp')
+                    this.$store.dispatch('isLoad')
                 })
             }
         });
@@ -77,6 +77,7 @@ export default {
         finishPullUp(){
             this.scroll && this.scroll.finishPullUp()
         }
+        
     },
 }
 </script>

@@ -2,89 +2,68 @@
   <div id="playlistdetail" class="wrapper">
     <DetailNavbar :description="playlist.description"></DetailNavbar>
     <Scroll :probeType="3" class="content" ref="scroll" :pull-up-load="true">
-    <AuthorMsg :coverimg="playlist.coverImgUrl"
-    :name="playlist.name"  
-    :creator="playlist.creator"
-    :shareCount="playlist.shareCount"
-    :playcount="playlist.playCount"
-    :description="playlist.description"
-    :commentCount="playlist.commentCount"></AuthorMsg>
-    <div class="playall"> 
-      <span class="songlength">播放全部 (共{{songs.length}}首)</span>
-      <span class="collect">+ 收藏({{playlist.subscribedCount}})</span>
-    </div>
+      <AuthorMsg
+        :coverimg="playlist.coverImgUrl"
+        :name="playlist.name"
+        :creator="playlist.creator"
+        :shareCount="playlist.shareCount"
+        :playcount="playlist.playCount"
+        :description="playlist.description"
+        :commentCount="playlist.commentCount"
+      ></AuthorMsg>
+      <div class="playall">
+        <span class="songlength">播放全部 (共{{songs.length}}首)</span>
+        <span class="collect">+ 收藏({{playlist.subscribedCount}})</span>
+      </div>
 
-
-    <!-- 歌曲列表 -->
-    <div class="songslist" v-for="(item,index) in songs" 
-    :class="{active:currentIndex===index}"
-    v-if="Object.keys(songs).length !==0">
-      <div class="songswrapper" @click="playAudio(item,index)" >
-        <!-- <div class="songsindex">
+      <!-- 歌曲列表 -->
+      <div
+        class="songslist"
+        v-for="(item,index) in songs"
+        :class="{active:currentIndex===index}"
+        v-if="Object.keys(songs).length !==0"
+      >
+        <div class="songswrapper" @click="playAudio(item,index)">
+          <!-- <div class="songsindex">
           <span :class="{active:currentIndex===index}">
             <img src="~assets/img/player/pause2.png" v-show="currentIndex===index">
             </span>
-        </div> -->
-        <div class="songsinfo" >
-          <div class="songtitle">{{item.name}}  {{item.alia[0]}}</div>
-          <div class="singer":class="{active:currentIndex===index}">
-            {{item.ar[0].name}} - {{item.al.name}}
+          </div>-->
+          <div class="songsinfo">
+            <div class="songtitle">{{item.name}} {{item.alia[0]}}</div>
+            <div
+              class="singer"
+              :class="{active:currentIndex===index}"
+            >{{item.ar[0].name}} - {{item.al.name}}</div>
           </div>
+          <span class="mv">mv</span>
+          <div class="more">more</div>
         </div>
-        <span class="mv">mv</span>
-        <div class="more">more</div>
       </div>
-    </div>
     </Scroll>
   </div>
 </template>
 
 <script>
-import DetailNavbar from './DetailNavbar'
-import AuthorMsg from './AuthorMsg'
+import DetailNavbar from "./DetailNavbar";
+import AuthorMsg from "./AuthorMsg";
 
 import { getListDetail } from "network/api";
 import { getSongUrl } from "network/api";
 import { getSongDetail } from "network/api";
 import { getAlbum } from "network/api";
 
-import Scroll from 'components/common/Scroll'
+import Scroll from "components/common/Scroll";
 export default {
-  name:"PlaylistDetail",
-  async created() {
-    //传进来的歌单id
-    this.id = this.$route.params.id;
-    //根据歌单id找到所在歌单的歌曲列表
-    const { data: res } = await getListDetail({ id: this.id });
-    this.playlist = res.playlist;
-    // this.$store.commit('playlist',this.playlist)
-    console.log(this.playlist);
-    this.songid = res.playlist.trackIds;
-    // console.log(this.songid);
-    // 查找所有的id 获取所有的歌曲id
-    const trackIds = this.playlist.trackIds.map(({ id }) => id);
-    // 再保存到trackid中
-    this.trackid = trackIds;
-    // console.log(trackIds);
-    //根据歌曲id 发送网络请求获取所有歌曲
-    const songUrl = await getSongUrl(trackIds);
-    // 把所有获取到的songUrl保存到songurl
-    this.songUrl = songUrl.data.data.map(({url}) => url)
-    // console.log(this.songUrl);
-    this.playinfo;
-
-    //获取歌曲详细信息
-    const songDetails = await getSongDetail(trackIds)
-    //将歌曲的详细信息保存到songs中
-    this.songs = songDetails.data.songs
-    // console.log(this.songs);1
-    // const album = await getAlbum(this.id)
-
+  name: "PlaylistDetail",
+  created() {
+    this.getSongData();
   },
-  activated() {
-    this.$refs.scroll.scroll.refresh();
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs.scroll.scroll.refresh();
+    });
   },
-  
   data() {
     return {
       //歌单列表
@@ -96,32 +75,59 @@ export default {
       //歌曲url
       songUrl: [],
       //歌曲信息
-      songs:[],
-      currentIndex:null
+      songs: [],
+      currentIndex: null
     };
   },
-  components:{ DetailNavbar, AuthorMsg ,Scroll},
+  components: { DetailNavbar, AuthorMsg, Scroll },
   methods: {
-    playAudio(song,index){
+    async getSongData() {
+      //传进来的歌单id
+      this.id = this.$route.params.id;
+      //根据歌单id找到所在歌单的歌曲列表
+      const { data: res } = await getListDetail({ id: this.id });
+      this.playlist = res.playlist;
+      // this.$store.commit('playlist',this.playlist)
+      // console.log(this.playlist);
+      this.songid = res.playlist.trackIds;
+      // console.log(this.songid);
+      // 查找所有的id 获取所有的歌曲id
+      const trackIds = this.playlist.trackIds.map(({ id }) => id);
+      // 再保存到trackid中
+      this.trackid = trackIds;
+      // console.log(trackIds);
+      //根据歌曲id 发送网络请求获取所有歌曲
+      const songUrl = await getSongUrl(trackIds);
+      // 把所有获取到的songUrl保存到songurl
+      this.songUrl = songUrl.data.data.map(({ url }) => url);
+      // console.log(this.songUrl);
+      //获取歌曲详细信息
+      const songDetails = await getSongDetail(trackIds);
+      //将歌曲的详细信息保存到songs中
+      this.songs = songDetails.data.songs;
+      // console.log(this.songs);1
+      // const album = await getAlbum(this.id)
+    },
+    playAudio(song, index) {
       // console.log(song);
       // this.$refs.audio.pause();
-      this.$store.commit('play');
-      let currentPlay ={};
+      this.$store.commit("play");
+      let currentPlay = {};
       currentPlay.id = song.id;
       currentPlay.singer = song.ar[0].name;
       currentPlay.albumPic = song.al.picUrl;
       currentPlay.name = song.name;
-      this.$store.commit('addToCurrentPlay', currentPlay)
-      this.$store.dispatch('AddToPlayList',currentPlay)
+      this.$store.commit("addToCurrentPlay", currentPlay);
+      this.$store.dispatch("AddToPlayList", currentPlay);
       this.currentIndex = index;
       // console.log(this.songs);
     }
-  },
+  }
 };
 </script>
 
 <style scoped>
-#playlistdetail{
+#playlistdetail {
   position: relative;
 }
 .content {
@@ -135,23 +141,27 @@ export default {
 }
 
 /* 播放全部 */
-.playall{
+.playall {
   width: 100%;
   height: 35px;
   line-height: 35px;
   display: flex;
   justify-content: space-between;
 }
-.collect{
+.collect {
   background-color: #ee4d41;
-  background-image: linear-gradient(to right, rgba(226, 125, 125, 0), rgb(226, 77, 77));
+  background-image: linear-gradient(
+    to right,
+    rgba(226, 125, 125, 0),
+    rgb(226, 77, 77)
+  );
   color: rgb(240, 239, 239);
   font-size: 14px;
-  padding:0 10px;
+  padding: 0 10px;
 }
 
 /* 歌曲列表  ↓*/
-.songswrapper{
+.songswrapper {
   width: 100%;
   display: flex;
   height: 45px;
@@ -169,7 +179,7 @@ export default {
 .songsindex img{
   width: 20px;
 } */
-.songsinfo{
+.songsinfo {
   flex: 4;
   margin-left: 8px;
   display: flex;
@@ -180,30 +190,30 @@ export default {
   white-space: nowrap;
   min-width: 0;
 }
-.songtitle{
+.songtitle {
   font-size: 15px;
   margin-bottom: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.singer{
+.singer {
   font-size: 12px;
-  opacity: .7;
+  opacity: 0.7;
   color: #707070;
 }
-.mv{
+.mv {
   flex: 1;
-  opacity: .9;
+  opacity: 0.9;
   text-align: right;
 }
-.more{
+.more {
   flex: 1;
-  opacity: .6;
+  opacity: 0.6;
   text-align: center;
 }
 
-.active{
+.active {
   color: rgb(209, 5, 49);
 }
 </style>
