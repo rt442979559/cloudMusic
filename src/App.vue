@@ -3,9 +3,7 @@
     <NavbarTop id="navbartop"  v-if="$route.meta.showNav"></NavbarTop>
     <MiniPlayer id="miniplayer"></MiniPlayer>
       <router-view ></router-view>
-    <van-loading  vertical v-show="this.$store.state.isLoad" id="loading">
-      <span class="loadtitle">努力加载中...</span>
-    </van-loading>
+    <van-loading  vertical v-show="this.$store.state.isLoad" id="loading">努力加载中...</van-loading>
   </div>
 </template>
 
@@ -38,9 +36,5 @@ export default {
   top: 45%;
   left: 50%;
   transform: translateX(-50%);
-  color: #e5473b;
-}
-.loadtitle{
-  color: #e5473b;
 }
 </style>

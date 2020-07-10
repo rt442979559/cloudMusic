@@ -1,5 +1,8 @@
 <template>
   <div id="playlistdetail" class="wrapper">
+    <van-popup v-model="show" round position="bottom" :style="{ height: '40%' }" >内容</van-popup>
+
+
     <DetailNavbar :description="playlist.description"></DetailNavbar>
     <Scroll :probeType="3" class="content" ref="scroll" :pull-up-load="true">
       <AuthorMsg
@@ -17,9 +20,11 @@
       </div>
 
       <!-- 歌曲列表 -->
+
       <div
         class="songslist"
         v-for="(item,index) in songs"
+        :key="index"
         :class="{active:currentIndex===index}"
         v-if="Object.keys(songs).length !==0"
       >
@@ -36,8 +41,10 @@
               :class="{active:currentIndex===index}"
             >{{item.ar[0].name}} - {{item.al.name}}</div>
           </div>
-          <span class="mv">mv</span>
-          <div class="more">more</div>
+          <span class="mv"></span>
+          <div class="more" @click.stop="showPopup">
+            <img src="~assets/img/author/more.png" alt="">
+          </div>
         </div>
       </div>
     </Scroll>
@@ -54,6 +61,7 @@ import { getSongDetail } from "network/api";
 import { getAlbum } from "network/api";
 
 import Scroll from "components/common/Scroll";
+import { Popup } from 'vant';
 export default {
   name: "PlaylistDetail",
   created() {
@@ -76,10 +84,11 @@ export default {
       songUrl: [],
       //歌曲信息
       songs: [],
-      currentIndex: null
+      currentIndex: null,
+      show: false,
     };
   },
-  components: { DetailNavbar, AuthorMsg, Scroll },
+  components: { DetailNavbar, AuthorMsg, Scroll,[Popup.name]:Popup},
   methods: {
     async getSongData() {
       //传进来的歌单id
@@ -121,6 +130,9 @@ export default {
       this.$store.dispatch("AddToPlayList", currentPlay);
       this.currentIndex = index;
       // console.log(this.songs);
+    },
+    showPopup(){
+      this.show = true;
     }
   }
 };
@@ -208,9 +220,13 @@ export default {
   text-align: right;
 }
 .more {
-  flex: 1;
-  opacity: 0.6;
+  flex: 0.5;
+  opacity: 0.5;
   text-align: center;
+}
+.more img{
+  width:75%;
+  vertical-align: middle;
 }
 
 .active {

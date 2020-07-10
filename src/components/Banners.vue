@@ -1,6 +1,7 @@
 <template>
   <div class="banners" v-if="Object.keys(banners).length !== 0">
     <div class="bannerbase">
+      <div class="bass"></div>
     <van-swipe :autoplay="4000" indicator-color="white" class="bannerSwiper">
       <van-swipe-item v-for="item in banners" :key="item.scm" class="swiperItem">
         <img :src="item.imageUrl" alt="">
@@ -19,10 +20,15 @@ export default {
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem
   },
-  async created() {
-    const { data: res } = await getBanner();
-    // console.log(res);
-    this.banners = res.banners;
+  created() {
+    this.getBanners()
+  },
+  methods: {
+    async getBanners(){
+      const { data: res } = await getBanner();
+      // console.log(res);
+      this.banners = res.banners;
+    }
   },
   data() {
     return {
@@ -34,15 +40,18 @@ export default {
 
 <style scoped>
   .banners{
-    height: 140px;
+    /* height: 140px; */
     width: 100%;
+    height: 100%;
   }
   .bannerbase{
-    background-color: #e5473b;
-    height: 65%;
+    /* background-color: #e5473b; */
+    background-image: url('~assets/img/bgc/bgc.png') ;
+    background-repeat: no-repeat;
+    /* height: 100%; */
   }
   .bannerSwiper{
-    height: 140px;
+    /* height: 140px; */
     text-align: center;
     border-radius: 6px;
   }

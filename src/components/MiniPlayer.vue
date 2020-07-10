@@ -1,5 +1,5 @@
 <template>
-  <div id="miniplay">
+  <div id="miniplay" >
     <div id="player">
       <van-popup v-model="playerShow"  id="playerpopup" >
         <div class="playernavbar">

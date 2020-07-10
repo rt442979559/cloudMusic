@@ -1,6 +1,6 @@
 <template>
   <div class="recommend">
-    <div v-for="item in recommends" class="recommend-item" @click="topTopPlayList">
+    <div v-for="item in recommends" class="recommend-item" @click="topTopPlayList" :key="item.title">
       <div class="cricle" ><img :src="item.image" alt=""> </div>
       <div class="recommendtitle">{{item.title}}</div>
     </div>
@@ -42,13 +42,14 @@ export default {
 
 <style scoped>
 .recommend {
+  position: relative;
   width: 100%;
   display: flex;
   height: 80px;
   justify-content: space-around;
   text-align: center;
   justify-items: center;
-  padding: 10px 0 15px 0;
+  padding: 0px 0 15px 0;
   border-bottom: 1px solid rgb(240, 240, 240);
 }
 .recommend-item{

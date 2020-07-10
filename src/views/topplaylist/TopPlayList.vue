@@ -7,10 +7,8 @@
         v-if="Object.keys(toplist).length !==0"
         :img="toplist[Math.ceil(Math.random()*20)].coverImgUrl"
       ></TopPlayInfo>
-      <div id="playcard">
-        <PlayCard
-          v-for="item in this.toplist"
-          v-if="toplist.length"
+      <div id="playcard" v-if="toplist.length">
+        <PlayCard v-for="item in this.toplist"
           :desc="item.copywriter"
           :id="item.id"
           :img="item.coverImgUrl"
@@ -49,14 +47,14 @@ export default {
     async getTopPlay() {
       const {data: { playlists: topPlay }} = await getTopPlaylists({ limit: 20 });
       this.toplist = topPlay;
-      console.log(this.toplist);
+      // console.log(this.toplist);
     },
     async loadMore() {
       console.log('上拉加载更多');
       const {data: { playlists: topPlay }} = await getTopPlaylists({ limit: 40 });
       this.toplist = topPlay;
       this.$refs.scroll.scroll.refresh();
-      console.log(this.$refs.scroll.scroll.refresh);
+      // console.log(this.$refs.scroll.scroll.refresh);
       this.$refs.scroll.finishPullUp();
       const {data: { playlists: topPlay1 }} = await getTopPlaylists({ limit: 60 });
       this.toplist = topPlay1;

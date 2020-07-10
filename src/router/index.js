@@ -10,7 +10,7 @@ const Index = () => import('views/index/Index')
 
 
 const Radioset = () => import('views/index/Radioset')
-const Friends = () => import('views/index/Friends')
+const Rank = () => import('views/index/Rank')
 const PlaylistDetail = () => import('views/songdetail/PlaylistDetail')
 
 const TopPlayList = () => import('views/topplaylist/TopPlayList')
@@ -44,8 +44,8 @@ const routes = [
                 }
             },
             {
-                path: '/friends',
-                component: Friends,
+                path: '/rank',
+                component: Rank,
                 meta: {
                     showNav: true
                 }

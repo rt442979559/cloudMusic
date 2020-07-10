@@ -1,19 +1,24 @@
 <template>
   <div id="index">
-      <NavbarBtm></NavbarBtm>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+    <NavbarBtm></NavbarBtm>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
 import NavbarBtm from "components/NavbarBtm";
 export default {
-    components:{NavbarBtm}
-}
+  components: { NavbarBtm }
+};
 </script>
 
 <style scoped>
-
+.fade-enter-active, .fade-leave-avtive {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>

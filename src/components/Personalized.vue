@@ -2,7 +2,7 @@
 <!-- 推荐歌单 -->
   <div class="personalized">
       <div class="recommendmore" @click="recommendClick">推荐歌单 ></div>
-      <div @click="laoziBtn">点老子试试</div>
+      <div @click="laoziBtn"></div>
       <div class="playcard" v-if="list.length">
         <PlayCard v-for="item in list" 
             :desc="item.copywriter"

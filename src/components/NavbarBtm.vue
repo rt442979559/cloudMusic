@@ -5,8 +5,8 @@
         <div @click="homeClick(0)" >
           <span :class="currentIndex==0?'active':'inactive'">推荐</span>
         </div>
-        <div @click="friendsClick(1)">
-          <span  :class="currentIndex==1?'active':'inactive'">朋友</span>
+        <div @click="rankClick(1)">
+          <span  :class="currentIndex==1?'active':'inactive'">排行</span>
         </div>
         <div @click="raiosetClick(2)">
           <span  :class="currentIndex==2?'active':'inactive'">电台</span>
@@ -23,8 +23,8 @@ export default {
       this.$router.push('/home')
       this.currentIndex = index;
     },
-    friendsClick(index){
-      this.$router.push('/friends')
+    rankClick(index){
+      this.$router.push('/rank')
       this.currentIndex = index;
     },
     raiosetClick(index){
