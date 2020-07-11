@@ -2,7 +2,9 @@
   <div id="index">
     <NavbarBtm></NavbarBtm>
     <transition name="fade">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </transition>
   </div>
 </template>

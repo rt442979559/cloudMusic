@@ -6,10 +6,10 @@
           <span :class="currentIndex==0?'active':'inactive'">推荐</span>
         </div>
         <div @click="rankClick(1)">
-          <span  :class="currentIndex==1?'active':'inactive'">排行</span>
+          <span  :class="currentIndex==1?'active':'inactive'">歌单</span>
         </div>
         <div @click="raiosetClick(2)">
-          <span  :class="currentIndex==2?'active':'inactive'">电台</span>
+          <span  :class="currentIndex==2?'active':'inactive'">排行</span>
         </div>
       </div>
     </div>
@@ -24,11 +24,11 @@ export default {
       this.currentIndex = index;
     },
     rankClick(index){
-      this.$router.push('/rank')
+      this.$router.push('/songcate')
       this.currentIndex = index;
     },
     raiosetClick(index){
-      this.$router.push('/radioset')
+      this.$router.push('/rank')
       this.currentIndex = index;
     }
   },

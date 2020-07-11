@@ -1,12 +1,11 @@
 <template>
   <div id="Home" class="wrapper" ref="wrapper">
     <Scroll :probeType="3" class="content" ref="scroll" 
-    :pullUpLoad="true"
-    :pullDownLoad="true" >
+    :pullUpLoad="true">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
       <Banners></Banners>
       <Recommend></Recommend>
-      <Personalized></Personalized>
-      <!-- <NewSong></NewSong> -->
+      <Personalized ref="personalized"></Personalized>
       <PersonalizedNewSong></PersonalizedNewSong>
       <ul>
         <li>1</li>
@@ -77,6 +76,7 @@
         <li>1</li>
         <li>1</li>
       </ul>
+    </van-pull-refresh>
     </Scroll>
   </div>
 </template>
@@ -88,7 +88,7 @@ import Recommend from "components/Recommend";
 import Personalized from "components/Personalized";
 import PersonalizedNewSong from "components/PersonalizedNewSong";
 import Scroll from "components/common/Scroll";
-import NewSong from 'components/common/NewSong'
+import { PullRefresh } from "vant";
 export default {
   name: "Home",
   components: {
@@ -97,8 +97,8 @@ export default {
     Recommend,
     Personalized,
     PersonalizedNewSong,
-    NewSong,
-    Scroll
+    Scroll,
+    [PullRefresh.name]: PullRefresh
   },
   mounted() {
     this.$nextTick(() => {
@@ -110,6 +110,28 @@ export default {
       this.$refs.scroll.scroll.refresh();
     });
   },
+  data() {
+    return {
+      count: 0,
+      isLoading: false
+    };
+  },
+  methods: {
+    onRefresh() {
+      setTimeout(() => {
+        this.isLoading = false;
+        // console.log(this.count);
+        if (this.count < 9) {
+          this.count++;
+          this.$refs.personalized.getPersonalized(this.count * 6,(this.count + 1) * 6);
+        } else {
+          this.count = 0;
+          this.$refs.personalized.getPersonalized(this.count * 6,(this.count + 1) * 6);
+        }
+        this.$refs.scroll.scroll.refresh();
+      }, 1000);
+    },
+  }
 };
 </script>
 

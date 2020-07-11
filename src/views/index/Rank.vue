@@ -1,133 +1,75 @@
 <template>
-  <div id="Rank" class="wrapper">
-      <van-tabs @click="tabClick" swipeable animated sticky>
-        <van-tab title="全部"></van-tab>
-        <van-tab title="华语"></van-tab>
-        <van-tab title="欧美"></van-tab>
-        <van-tab title="民谣"></van-tab>
-        <van-tab title="电子"></van-tab>
-        <van-tab title="怀旧"></van-tab>
-      </van-tabs>
-    <Scroll class="content" ref="scroll">
-      <div class="playcard" v-if="playlists[currentType].list.length">
-        <PlayCard
-          v-for="item in playlists[currentType].list"
-          :key="item.id"
-          :id="item.id"
-          :name="item.name"
-          :img="item.coverImgUrl"
-          :playcount="item.playCount"
-        ></PlayCard>
+  <div id="Rank">
+    <div class="rankwrap">
+      <div class="rankitem" v-for="item in toplistdetail" @click="rankItemClick(item)" :key="item.id">
+          <div class="left">
+              <img :src="item.coverImgUrl" alt />
+          </div>
+          <ul class="right" >
+              <li v-for="(items,index) in item.tracks" class="rightitem" :key="index">
+                {{index+1}}. {{items.first}} - {{items.second}}
+              </li>
+          </ul>
       </div>
-    </Scroll>
+    </div>
   </div>
 </template>
 
 <script>
-import { getTopPlaylists } from "network/api";
-import { getTopPlaylistshigh } from "network/api";
-import PlayCard from "components/common/PlayCard";
-import Scroll from "components/common/Scroll";
-import { Tab, Tabs } from "vant";
+import { getTopList, getTopListIdx, getTopListDetail } from "network/api";
 export default {
   name: "Rank",
-  components: {
-    [Tab.name]: Tab,
-    [Tabs.name]: Tabs,
-    PlayCard,
-    Scroll
-  },
   data() {
     return {
-      activeTabIndex: 0,
-      playlists: {
-        全部: { page: 0, list: [] },
-        华语: { page: 0, list: [] },
-        欧美: { page: 0, list: [] },
-        民谣: { page: 0, list: [] },
-        电子: { page: 0, list: [] },
-        怀旧: { page: 0, list: [] }
-      },
-      currentType: "全部"
+      toplist: [],
+      toplistdetail: [],
     };
   },
   created() {
-    this.initData();
-    this.TopPlaylistH();
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.$refs.scroll.scroll.refresh();
-    });
+    this.getRankList();
   },
   methods: {
-    async initData() {
-      this.TopPlaylists("全部");
-      this.TopPlaylists("华语");
-      this.TopPlaylists("欧美");
-      this.TopPlaylists("民谣");
-      this.TopPlaylists("电子");
-      this.TopPlaylists("怀旧");
+    async getRankList() {
+      const {data: { list: listdetail }} = await getTopListDetail();
+      this.toplistdetail = listdetail.slice(0, 6);
+      console.log(this.toplistdetail);
     },
-    async TopPlaylists(type) {
-      const { data: res } = await getTopPlaylists({ limit: 30, cat: type });
-      // console.log(res);
-      this.playlists[type].list.push(...res.playlists);
-      console.log(this.playlists);
-    },
-    async TopPlaylistH(type) {
-      const data = await getTopPlaylistshigh({ limit: 1, cat: type });
-      console.log(data);
-    },
-
-    tabClick(index) {
-      switch (index) {
-        case 0:
-          this.currentType = "全部";
-          // console.log(this.currentType);
-          break;
-        case 1:
-          this.currentType = "华语";
-          // console.log(this.currentType);
-          break;
-        case 2:
-          this.currentType = "欧美";
-          // console.log(this.currentType);
-          break;
-        case 3:
-          this.currentType = "民谣";
-          // console.log(this.currentType);
-          break;
-        case 4:
-          this.currentType = "电子";
-          // console.log(this.currentType);
-          break;
-        case 5:
-          this.currentType = "怀旧";
-          // console.log(this.currentType);
-          break;
-      }
+    rankItemClick(item) {
+      this.$router.push("/playlistdetail/" + item.id);
     }
   }
 };
 </script>
 
 <style scoped>
-#Rank{
+#Rank {
   position: relative;
 }
-.playcard {
+.rankitem {
+  height: 16vh;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  padding-top: 8px;
+  margin-left: 5px;
 }
-.content {
-  height: calc(100vh - 180px);
-  overflow: hidden;
-  position: absolute;
-  top:44px;
-  bottom:0px;
-  left: 0;
-  right: 0;
+.rankitem .left{
+    flex: 1;
 }
+.rankitem .right{
+    flex: 2;
+}
+.rankitem .left img {
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+}
+.rankitem .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  font-size: 13px;
+  opacity: 0.7;
+  margin-left: 6px;
+}
+
+
 </style>

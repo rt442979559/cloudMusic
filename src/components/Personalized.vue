@@ -2,7 +2,6 @@
 <!-- 推荐歌单 -->
   <div class="personalized">
       <div class="recommendmore" @click="recommendClick">推荐歌单 ></div>
-      <div @click="laoziBtn"></div>
       <div class="playcard" v-if="list.length">
         <PlayCard v-for="item in list" 
             :desc="item.copywriter"
@@ -22,31 +21,25 @@ import PlayCard from './common/PlayCard'
 export default {
     name:"Personalized",
     components:{ PlayCard },
-    created() {
-        this.getPersonalized()
+    async created() {
+        this.getPersonalized(0,6)
     },
     data() {
         return {
            list:[],
-           list2:[]
         }
     },
     methods: {
-        async getPersonalized(){
-            //只获取6组数据进行 渲染
-            const { data:res } = await getPersonalized({ limit:12 })
-            this.list = res.result
-            this.list2 = this.list.slice(6,12)
-            let list1 = this.list.slice(0,6)
-            this.list = list1
-            // console.log(this.list2);
+        async getPersonalized(a,b){
+            //只获取6组数据进行 渲染展示
+            const { data:res } = await getPersonalized({ limit : 60 })
+            this.list = res.result.slice(a,b);
         },
-
         recommendClick(){
             this.$router.push('/topplaylist')
         },
-        laoziBtn(){
-            this.list = this.list2
+        text(){
+            console.log('ceshi');
         }
     },
 }

@@ -1,18 +1,18 @@
 <template>
   <div id="mine">
-      <h2>mine</h2>
+    <h2>mine</h2>
   </div>
 </template>
 
 <script>
 export default {
-
-}
+  name: "Mine",
+};
 </script>
 
 <style scoped>
-  #mine{
-    position: relative;
-    top: 45px;
-  }
+#mine {
+  position: relative;
+  top: 45px;
+}
 </style>

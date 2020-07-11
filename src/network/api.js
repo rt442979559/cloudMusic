@@ -24,9 +24,6 @@ export const getTopPlaylistshigh = (params) => $http.get('/top/playlist/highqual
 // 获取音乐详情
 export const getSongDetail = ids => $http.get(`/song/detail?ids=${ids}`)
 
-// 最新专辑
-// export const getNewest = () => $http.get('/album/newest')
-
 //推荐歌单
 export const getListDetail = params => $http.get('/playlist/detail', { params })
 
@@ -39,16 +36,16 @@ export const getSongLyric = id => $http.get(`lyric?id=${id}`)
 // 推荐新音乐
 export const getPersonalizedNewSong = () => $http.get('/personalized/newsong')
 
-// 获取专辑url
-// export const getAlbum = id => $http.get(`/album?id=${id}`)
-
 //热搜
 export const getSearch = () => $http.get('/search/hot')
 
 //电台
 export const getRadioStation = () => $http.get('/dj/banner')
 
+
 // 排行榜
 export const getTopList = () => $http.get('/toplist')
 // 排行榜 -> 飙升榜idx = 3
 export const getTopListIdx = idx => $http.get(`/top/list?idx=${idx}`)
+//所有榜单内容摘要
+export const getTopListDetail = () => $http.get(`/toplist/detail`)

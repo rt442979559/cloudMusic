@@ -9,8 +9,8 @@ const Search = () => import('views/search/Search')
 const Index = () => import('views/index/Index')
 
 
-const Radioset = () => import('views/index/Radioset')
 const Rank = () => import('views/index/Rank')
+const SongCate = () => import('views/index/SongCate')
 const PlaylistDetail = () => import('views/songdetail/PlaylistDetail')
 
 const TopPlayList = () => import('views/topplaylist/TopPlayList')
@@ -44,15 +44,15 @@ const routes = [
                 }
             },
             {
-                path: '/rank',
-                component: Rank,
+                path: '/songcate',
+                component: SongCate,
                 meta: {
                     showNav: true
                 }
             },
             {
-                path: '/radioset',
-                component: Radioset,
+                path: '/rank',
+                component: Rank,
                 meta: {
                     showNav: true
                 }
@@ -84,6 +84,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+    mode:  'hash',
     routes,
 })
 

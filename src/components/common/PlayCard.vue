@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     playCount(){
-      return (this.playcount / 10000).toFixed(2) + '万'
+      return (this.playcount / 10000).toFixed(0) + '万'
     },
     calcWidth(widthVW){
       if(this.$route.path==='/topplaylist'){

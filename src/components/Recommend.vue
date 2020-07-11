@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     topTopPlayList(){
-      this.$router.push('/topplaylist')
+      this.$router.push('/songcate')
     }
   },
 };
