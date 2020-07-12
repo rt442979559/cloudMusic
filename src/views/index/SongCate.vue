@@ -55,11 +55,9 @@ export default {
     this.initData();
     this.TopPlaylistH();
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.$refs.scroll.scroll.refresh();
-    });
-  },
+  // activated() {
+  //     this.$refs.scroll.scroll.refresh();
+  // },
   methods: {
     async initData() {
       this.TopPlaylists("全部");
@@ -81,6 +79,7 @@ export default {
     },
 
     tabClick(index) {
+      this.$refs.scroll.scroll.refresh();
       switch (index) {
         case 0:
           this.currentType = "全部";

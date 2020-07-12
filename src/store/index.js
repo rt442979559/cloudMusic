@@ -5,6 +5,7 @@ import actions from './actions'
 import getters from './getters'
 
 const state = {
+    navCurrentIndex:0,
     isLoad: false, //加载组件
     currentPlay: {  // 当前播放歌曲
         'id': 0,

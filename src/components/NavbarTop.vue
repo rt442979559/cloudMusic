@@ -45,6 +45,7 @@ export default {
     },
     navhomeClick(index) {
       this.$router.push('/index');
+      this.$store.commit('changeNavIndex',0)
       this.currentIndex = index
     },
     navvideomvClick(index) {

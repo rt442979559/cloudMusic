@@ -3,39 +3,43 @@
     <div class="navbarBtm">
       <div class="navbarBtm-wrapper" >
         <div @click="homeClick(0)" >
-          <span :class="currentIndex==0?'active':'inactive'">推荐</span>
+          <span :class="navCurrentIndex==0?'active':'inactive'">推荐</span>
         </div>
         <div @click="rankClick(1)">
-          <span  :class="currentIndex==1?'active':'inactive'">歌单</span>
+          <span  :class="navCurrentIndex==1?'active':'inactive'">歌单</span>
         </div>
         <div @click="raiosetClick(2)">
-          <span  :class="currentIndex==2?'active':'inactive'">排行</span>
+          <span  :class="navCurrentIndex==2?'active':'inactive'">排行</span>
         </div>
       </div>
     </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "NavbarBtm",
   methods: {
     homeClick(index){
       this.$router.push('/home')
-      this.currentIndex = index;
+      this.$store.commit('changeNavIndex',index)
     },
     rankClick(index){
       this.$router.push('/songcate')
-      this.currentIndex = index;
+      this.$store.commit('changeNavIndex',index)
     },
     raiosetClick(index){
       this.$router.push('/rank')
-      this.currentIndex = index;
+      this.$store.commit('changeNavIndex',index)
     }
   },
   data() {
     return {
       currentIndex:0
     }
+  },
+  computed: {
+    ...mapState(['navCurrentIndex'])
   },
 };
 </script>

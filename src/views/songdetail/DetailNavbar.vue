@@ -16,10 +16,9 @@ export default {
   props:["description","coverimg"],
   methods: {
       backClick(){
-          this.$router.go(-1)
+          this.$router.back();
       }
   },
-
 };
 </script>
 

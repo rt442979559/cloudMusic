@@ -49,4 +49,8 @@ export default {
         state.isLoad = show;
     },
 
+    // navbarindex
+    changeNavIndex(state,index){
+        state.navCurrentIndex = index;
+    }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="recommend">
-    <div v-for="item in recommends" class="recommend-item" @click="topTopPlayList" :key="item.title">
+    <div v-for="(item,index) in recommends" class="recommend-item" @click="toTopPlayList(index)" :key="index">
       <div class="cricle" ><img :src="item.image" alt=""> </div>
       <div class="recommendtitle">{{item.title}}</div>
     </div>
@@ -32,9 +32,19 @@ export default {
       ]
     };
   },
+        // this.$router.push('/songcate')
   methods: {
-    topTopPlayList(){
-      this.$router.push('/songcate')
+    toTopPlayList(index){
+      switch (index) {
+        case 2:
+          this.$router.push('/songcate')
+          this.$store.commit('changeNavIndex',1)
+          break;
+        case 3:
+          this.$router.push('/rank')
+          this.$store.commit('changeNavIndex',2)
+          break;
+      }
     }
   },
 };

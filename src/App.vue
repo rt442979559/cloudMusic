@@ -2,7 +2,9 @@
   <div id="app">
     <NavbarTop id="navbartop"  v-if="$route.meta.showNav"></NavbarTop>
     <MiniPlayer id="miniplayer"></MiniPlayer>
+    <keep-alive :exclude="['PlaylistDetail']" >
       <router-view ></router-view>
+    </keep-alive>
     <van-loading  vertical v-show="this.$store.state.isLoad" id="loading">努力加载中...</van-loading>
   </div>
 </template>

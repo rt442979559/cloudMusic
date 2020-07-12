@@ -3,7 +3,7 @@
     <van-popup v-model="show" round position="bottom" :style="{ height: '40%' }" >内容</van-popup>
 
 
-    <DetailNavbar :description="playlist.description"></DetailNavbar>
+    <DetailNavbar :description="playlist.description" :coverimg="playlist.coverImgUrl"></DetailNavbar>
     <Scroll :probeType="3" class="content" ref="scroll" :pull-up-load="true">
       <AuthorMsg
         :coverimg="playlist.coverImgUrl"
@@ -115,7 +115,6 @@ export default {
       //将歌曲的详细信息保存到songs中
       this.songs = songDetails.data.songs;
       // console.log(this.songs);1
-      // const album = await getAlbum(this.id)
     },
     playAudio(song, index) {
       // console.log(song);
