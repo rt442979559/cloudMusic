@@ -9,6 +9,7 @@ const state = {
     isLoad: false, //加载组件
     currentPlay: {  // 当前播放歌曲
         'id': 0,
+        'url':'',
         'name': '歌曲名称',
         'singer': '演唱者',
         'albumPic': '',

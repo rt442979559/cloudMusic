@@ -6,7 +6,11 @@ import 'assets/css/normalize.css'
 import VueLazyLoad from 'vue-lazyload'
 import { Lazyload } from 'vant';
 import $http from './network/request'
+import 'babel-polyfill';
+import FastClick from 'fastclick'
 
+
+Vue.config.debug = true;
 // ---------------------------------------------------------------
 // 图片懒加载
 Vue.use(Lazyload);
@@ -18,13 +22,18 @@ Vue.use(VueLazyLoad,{
   loading:require('./assets/img/cat.jpg')
 })
 
+
+//移动端300ms延迟
+FastClick.attach(document.body)
+
+
 Vue.config.productionTip = false
 
 // ---------------------------------------------------------------
 //请求拦截器
 $http.interceptors.request.use(function(config){
-  // 这里不能用this.$stroe调用！！ 深坑！
-  store.state.isLoad = true; //在请求发出之前进行一些操作
+  // 这里不能用this.$stroe调用！！ 深坑！ (因为当前是js文件)
+  store.state.isLoad = true; //在请求发出之后显示load
   return config
 })
 //响应拦截器

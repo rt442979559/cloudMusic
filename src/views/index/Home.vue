@@ -101,14 +101,10 @@ export default {
     [PullRefresh.name]: PullRefresh
   },
   mounted() {
-    this.$nextTick(() => {
-      this.$refs.scroll.scroll.refresh();
-    });
+    this.initScroll();
   },
   activated() {
-    this.$nextTick(() => {
-      this.$refs.scroll.scroll.refresh();
-    });
+    this.initScroll();
   },
   data() {
     return {
@@ -130,6 +126,11 @@ export default {
         }
         this.$refs.scroll.scroll.refresh();
       }, 1000);
+    },
+    initScroll() {
+      this.$nextTick(() => {
+        this.$refs.scroll.scroll.refresh();
+      });
     },
   }
 };

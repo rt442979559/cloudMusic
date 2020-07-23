@@ -1,4 +1,5 @@
 <template>
+<!-- 最新音乐 -->
   <div class="newsong" ref="newsong">
     <div class="listcontent" ref="content">
       <div class="listitem" v-for="item in newSongList" ref="listitem" :key="item.id">
@@ -56,29 +57,28 @@ export default {
 
 <style scoped>
 .newsong {
-  width: 100vw;
   overflow: hidden;
-  /* touch-action: none */
+  touch-action: none
 }
 .listcontent {
   display: flex;
   align-items: center;
-  height: 150px;
+  height: 41.667vw;
 }
 .listitem {
   margin: 0 4px;
 }
 .listitem img {
-  width: 33vw;
+  width: 100%;
   border-radius: 8px;
 }
 .listitemspan {
-  font-size: 12px;
+  font-size: 3.333vw;
   overflow: hidden;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   white-space: nowrap;
-  width: 105px;
+  width: 29.167vw;
   display: block;
 }
 </style>

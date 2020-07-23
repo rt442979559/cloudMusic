@@ -1,5 +1,5 @@
 <template>
-  <div class="playcard" @click="cardClick" :style="{width: calcWidth + 'vw' }">
+  <div class="playcarditem" @click="cardClick" :style="{width: calcWidth + 'vw' }">
     <img :src="img" class="playcardimg" :style="{width: calcWidth + 'vw'}" v-lazy="img" alt />
     <div class="counte">
       <img src="~assets/img/author/headphones.png"  alt />
@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import { Lazyload } from 'vant';
+// import { Lazyload } from 'vant';
 export default {
+  // components:{ Lazyload },
   props: ["id", "img", "name", "playcount",],
-  components:{ Lazyload },
   created() {
     this.calcWidth;
   },
@@ -48,20 +48,21 @@ export default {
 </script>
 
 <style scoped>
-.playcard {
+.playcarditem {
   position: relative;
   padding-bottom: 10px;
   margin-top: 10px;
   width: 32vw;
-  border-radius: 10px;
+  border-radius: 2.778vw;
 }
 .playcardimg {
-  width: 32vw;
+  /* width: 32vw; */
+  width: 100%;
   border-radius: 5px;
-  position: relative;
+  /* position: relative; */
 }
 .cardname {
-  font-size: 11px;
+  font-size: 3.056vw;
   letter-spacing: 0.7px;
   overflow: hidden;
   text-overflow: ellipsis;

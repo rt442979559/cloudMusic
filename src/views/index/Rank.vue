@@ -9,7 +9,7 @@
           :key="item.id"
         >
           <div class="left">
-            <img :src="item.coverImgUrl" alt />
+            <img :src="item.coverImgUrl" alt v-lazy="item.coverImgUrl"/>
           </div>
           <ul class="right">
             <li
@@ -39,7 +39,7 @@ export default {
   created() {
     this.getRankList();
   },
-  mounted() {
+  activated() {
     this.initScroll();
   },
   methods: {
@@ -47,8 +47,8 @@ export default {
       const {
         data: { list: listdetail }
       } = await getTopListDetail();
-      this.toplistdetail = listdetail.slice(0, 6);
-      console.log(this.toplistdetail);
+      this.toplistdetail = listdetail.slice(0, 12);
+      // console.log(this.toplistdetail);
     },
     rankItemClick(item) {
       this.$router.push("/playlistdetail/" + item.id);
@@ -91,7 +91,7 @@ export default {
 .rankitem .right {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   font-size: 13px;
   opacity: 0.7;
   margin-left: 6px;

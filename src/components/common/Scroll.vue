@@ -76,7 +76,11 @@ export default {
     methods: {
         finishPullUp(){
             this.scroll && this.scroll.finishPullUp()
-        }
+        },
+        // refresh() {
+        //     this.scroll && this.scroll.refresh()
+        //     console.log('hi');
+        // },
         
     },
 }

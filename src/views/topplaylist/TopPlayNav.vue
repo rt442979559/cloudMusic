@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
     .topPlayNav{
-        height: 45px;
+        height: 12.5vw;
         width: 100%;
         background-color: skyblue;
         display: flex;

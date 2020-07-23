@@ -15,19 +15,19 @@ export default {
       recommends: [
         {
           title: "私人FM",
-          image: require("assets/img/recommend/radio.svg")
+          image: require("assets/img/recommend/music-radio.png")
         },
         {
           title: "每日推荐",
-          image: require("assets/img/recommend/radio.svg")
+          image: require("assets/img/recommend/music-radio.png")
         },
         {
           title: "歌单",
-          image: require("assets/img/recommend/radio.svg")
+          image: require("assets/img/recommend/music-menu.png")
         },
         {
           title: "排行",
-          image: require("assets/img/recommend/radio.svg")
+          image: require("assets/img/recommend/rank.png")
         }
       ]
     };
@@ -55,29 +55,30 @@ export default {
   position: relative;
   width: 100%;
   display: flex;
-  height: 80px;
+  height: 22.222vw;
   justify-content: space-around;
   text-align: center;
   justify-items: center;
-  padding: 0px 0 15px 0;
+  padding: 0px 0 4.167vw 0;
   border-bottom: 1px solid rgb(240, 240, 240);
 }
 .recommend-item{
-  width: 50px;
-  height: 50px;
+  width: 13.889vw;
+  height: 13.889vw;
   background-color: #ec493d;
-  margin-top: 10px;
+  margin-top: 2.778vw;
   border-radius: 50%;
   opacity: .95;
 }
 .recommendtitle{
-  font-size: 12px;
+  font-size: 3.333vw;
 }
 .cricle{
-  padding:8px;
+  padding:2.222vw;
+  margin-bottom: 1.389vw;
 }
 img{
-  width: 100%;
+  width: 90%;
 }
 a {
   text-decoration: none;

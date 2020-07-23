@@ -1,8 +1,8 @@
 <template>
   <!-- 最新音乐 -->
   <div class="newsong">
-    <span class="personalizednewsong">最新音乐 ></span>
-    <NewSong></NewSong>
+    <span class="personalizednewsong">最新音乐 ＞</span>
+    <NewSong id="NewSong"></NewSong>
   </div>
 </template>
 
@@ -15,12 +15,15 @@ export default {
 
 <style scoped>
 .newsong {
-  margin-top: 10px;
+  margin-top: 2.778vw;
 }
 .personalizednewsong {
-  margin: 12px 0 0 0px;
-  font-size: 14px;
-  border-left: 1.5px solid red;
-  padding: 0 0 0 6px;
+  /* margin: 2.333vw 0 0 0px; */
+  font-size: 3.889vw;
+  border-left: 0.417vw solid red;
+  padding: 0 0 0 1.667vw;
+}
+#NewSong{
+  margin-top: -1.667vw;
 }
 </style>

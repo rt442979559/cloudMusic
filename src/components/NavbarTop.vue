@@ -2,12 +2,15 @@
   <!-- nav上层 -->
   <div class="navbar">
     <div class="navbarTop">
-      <div class="navmeuns"  @click="showPopup">
+      <div class="navmeuns"  @click="showPopup" >
         <img src="~assets/img/navbar/menus.png" alt="">
       </div>
-    <van-popup v-model="show" position="left" class="menusPopup"
-    :style="{ height: '100%' ,width:'80%' }" >
-      content
+    <van-popup v-model="show" position="left" class="menusPopup">
+      <div class="avatar"></div>
+      <div class="mygit" @click="gitClick">
+        <img src="~assets/img/github.png" alt="">
+        <span>github</span>
+      </div>
     </van-popup>
 
       <div class="navicon">
@@ -31,12 +34,11 @@
 </template>
 
 <script>
-import { Popup, cell } from "vant";
+import { Popup } from "vant";
 export default {
   name: "NavbarTop",
   components: {
     [Popup.name]: Popup,
-    [cell.name]: cell
   },
   methods: {
     navmineClick(index) {
@@ -55,12 +57,16 @@ export default {
     searchClick(){
       this.$router.push('/search')
     },
+    //侧边栏
     menusClick(){
-      this.$store.commit('openMenus',12)
+      this.$store.commit('openMenus')
     },
-
     showPopup() {
       this.show = true;
+    },
+    //github
+    gitClick(){
+      window.open("https://github.com/rt442979559/cloudMusic")
     }
 
   },
@@ -92,10 +98,6 @@ export default {
   width: 100%;
   z-index: 888;
 }
-.navbaritem img {
-  width: 30px;
-  vertical-align: middle;
-}
 .navmeuns {
   flex: 1;
   background-color: #e5473b;
@@ -118,7 +120,7 @@ export default {
   justify-content: space-between;
 }
 img {
-  width: 30px;
+  width: 7.222vw;
   vertical-align: middle;
 }
 .nav-mine {
@@ -130,8 +132,35 @@ img {
 .nav-videomv {
   background-color: #e5473b;
 }
-
 .inactive{
   opacity: .4;
 }
+
+
+/* 弹出层 */
+.menusPopup{
+  height: 100vh;
+  width: 80vw;
+}
+.avatar{
+  width: 100%;
+  height: 30vh;
+  background: url(~assets/img/cat2.jpg)  no-repeat;
+  background-size: 100% ;
+  background-position: 50%;
+}
+.avatar img{
+  height: 100% ;
+  width: 100%;
+}
+.mygit{
+  height: 10vh;
+  line-height: 10vh;
+  opacity: .8;
+}
+.mygit img{
+  margin:0 5vw 0 -2.5vh;
+}
+
+
 </style>

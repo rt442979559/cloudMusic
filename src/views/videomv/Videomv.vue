@@ -1,12 +1,16 @@
 <template>
   <div id="videomv">
-      <h2>videomv</h2>
+      <h2 @touchmove="touchstart">videomv</h2>
   </div>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    touchstart(e){
+      console.log(e);
+    }
+  },
 }
 </script>
 

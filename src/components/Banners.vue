@@ -53,11 +53,11 @@ export default {
   .bannerSwiper{
     /* height: 140px; */
     text-align: center;
-    border-radius: 6px;
+    border-radius: 1.667vw;
   }
   .swiperItem img{
     width: 96%;
     height: 100%;
-    border-radius: 6px;
+    border-radius: 1.667vw;
   }
 </style>

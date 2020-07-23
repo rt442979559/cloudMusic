@@ -32,7 +32,7 @@
         </div>
         <div class="playerconsole">
           <div class="playermode">
-            <img src="~assets/img/player/list.png" >
+            <img src="~assets/img/player/loop.png" >
           </div>
           <div class="lastsong" @click="lastSongClick">
             <img src="~assets/img/player/playerprev.png" >
@@ -60,7 +60,7 @@
       </span>
     </div>
     <div class="play" @click="toggleStatus">
-      <img src="~assets/img/player/play2.png" v-show="!playing">
+      <img src="~assets/img/player/toplay.png" v-show="!playing">
       <img src="~assets/img/player/pause2.png" >
     </div>
     <div class="songlist" @click="showPopup">
@@ -84,9 +84,9 @@
       </van-popup>
     </div>
 
-    <audio ref="audio" :src="songUrl" @play="start"
+    <audio ref="audio" :src="currentPlay.url" @play="start"
      @pause="pauses" @ended="end"
-     autoplay></audio>
+     autoplay loop></audio>
   </div>
 </template>
 
@@ -175,7 +175,7 @@ export default {
     },
     // 结束后 选择模式
     end(){
-      
+      console.log('end ');
     },
 
     onSelect(option) {
@@ -231,8 +231,8 @@ export default {
   text-align: start;
   display: flex;
   flex-direction: column;
-  font-size: 16px;
-  line-height: 25px;
+  font-size: 4.444vw;
+  line-height: 6.944vw;
   align-items: baseline;
   border-bottom: 0.8px solid rgba(49, 47, 47, 0.8);
   letter-spacing: 1.5px;
@@ -241,10 +241,10 @@ export default {
   white-space: nowrap;
 }
 .playersongtitle span:nth-child(1){
-  margin-top: 5px;
+  margin-top: 1.389vw;
 }
 .playersongtitle span:nth-child(2){
-  font-size: 12px;
+  font-size: 3.333vw;
   opacity: .7;
 }
 .playershare{
@@ -254,7 +254,7 @@ export default {
 .middle{
   height: 73vh;
   color: white;
-  font-size: 14px;
+  font-size: 3.889vw;
   overflow: hidden;
 }
 .playerrecord{
@@ -267,7 +267,7 @@ export default {
 }
 .playerrecord .playerdemo{
   position: relative;
-  margin: 40px auto 0;
+  margin: 11.111vw auto 0;
   width: 80%;
   padding-top: 80%;
   height: 0;

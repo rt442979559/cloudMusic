@@ -36,7 +36,6 @@ export default {
         state.playing = true
     },
 
-
     play(state) {
         state.playing = true
         console.log('play');
@@ -45,6 +44,8 @@ export default {
         state.playing = false
         console.log('pause');
     },
+
+    
     setLoad(state, show) { //设置loading组件是否显示
         state.isLoad = show;
     },

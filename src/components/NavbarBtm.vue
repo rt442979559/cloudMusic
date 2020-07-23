@@ -79,14 +79,14 @@ export default {
 .active{
   padding: 0 1px 5px 1px;
   border-bottom: 1.5px solid white;
-  font-size: 12.5px;
+  font-size: 3.611vw;
   color: white;
   letter-spacing: 0.8px;
   color: white;
 }
 .inactive {
   padding: 0 1px 5px 1px;
-  font-size: 12px;
+  font-size: 3.472vw;
   color: white;
   letter-spacing: 0.8px;
   opacity: 0.7;

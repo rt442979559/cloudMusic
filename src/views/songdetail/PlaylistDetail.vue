@@ -18,9 +18,8 @@
         <span class="songlength">播放全部 (共{{songs.length}}首)</span>
         <span class="collect">+ 收藏({{playlist.subscribedCount}})</span>
       </div>
-
       <!-- 歌曲列表 -->
-
+      
       <div
         class="songslist"
         v-for="(item,index) in songs"
@@ -58,13 +57,12 @@ import AuthorMsg from "./AuthorMsg";
 import { getListDetail } from "network/api";
 import { getSongUrl } from "network/api";
 import { getSongDetail } from "network/api";
-import { getAlbum } from "network/api";
 
 import Scroll from "components/common/Scroll";
 import { Popup } from 'vant';
 export default {
   name: "PlaylistDetail",
-  created() {
+  async created() {
     this.getSongData();
   },
   mounted() {
@@ -96,7 +94,6 @@ export default {
       //根据歌单id找到所在歌单的歌曲列表
       const { data: res } = await getListDetail({ id: this.id });
       this.playlist = res.playlist;
-      // this.$store.commit('playlist',this.playlist)
       // console.log(this.playlist);
       this.songid = res.playlist.trackIds;
       // console.log(this.songid);
@@ -106,29 +103,31 @@ export default {
       this.trackid = trackIds;
       // console.log(trackIds);
       //根据歌曲id 发送网络请求获取所有歌曲
-      const songUrl = await getSongUrl(trackIds);
+      // const songUrl = await getSongUrl(trackIds);
       // 把所有获取到的songUrl保存到songurl
-      this.songUrl = songUrl.data.data.map(({ url }) => url);
+      // this.songUrl = songUrl.data.data.map(({ url }) => url);
       // console.log(this.songUrl);
       //获取歌曲详细信息
       const songDetails = await getSongDetail(trackIds);
       //将歌曲的详细信息保存到songs中
       this.songs = songDetails.data.songs;
-      // console.log(this.songs);1
+      // console.log(this.songs);
     },
-    playAudio(song, index) {
-      // console.log(song);
+    async playAudio(song, index) {
       // this.$refs.audio.pause();
-      this.$store.commit("play");
+      const songurl = await getSongUrl(song.id);
+      // console.log(songurl.data.data[0].url);
+      
       let currentPlay = {};
+      currentPlay.url = songurl.data.data[0].url
       currentPlay.id = song.id;
       currentPlay.singer = song.ar[0].name;
       currentPlay.albumPic = song.al.picUrl;
       currentPlay.name = song.name;
+      this.$store.commit("play");
       this.$store.commit("addToCurrentPlay", currentPlay);
       this.$store.dispatch("AddToPlayList", currentPlay);
       this.currentIndex = index;
-      // console.log(this.songs);
     },
     showPopup(){
       this.show = true;
@@ -154,7 +153,7 @@ export default {
 /* 播放全部 */
 .playall {
   width: 100%;
-  height: 35px;
+  height: 9.722vw;
   line-height: 35px;
   display: flex;
   justify-content: space-between;
@@ -167,8 +166,8 @@ export default {
     rgb(226, 77, 77)
   );
   color: rgb(240, 239, 239);
-  font-size: 14px;
-  padding: 0 10px;
+  font-size: 3.889vw;
+  padding: 0 2.778vw;
 }
 
 /* 歌曲列表  ↓*/

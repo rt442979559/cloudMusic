@@ -72,7 +72,7 @@ export default {
 #playcard {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 .content {
   height: calc(100vh - 95px);

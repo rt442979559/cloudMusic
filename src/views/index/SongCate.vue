@@ -11,8 +11,8 @@
     <Scroll class="content" ref="scroll">
       <div class="playcard" v-if="playlists[currentType].list.length">
         <PlayCard
-          v-for="item in playlists[currentType].list"
-          :key="item.id"
+          v-for="(item,index) in playlists[currentType].list"
+          :key="index"
           :id="item.id"
           :name="item.name"
           :img="item.coverImgUrl"
@@ -49,23 +49,18 @@ export default {
         怀旧: { page: 0, list: [] }
       },
       currentType: "全部"
-    };
+    }
   },
-  created() {
+  async created() {
     this.initData();
     this.TopPlaylistH();
   },
-  // activated() {
-  //     this.$refs.scroll.scroll.refresh();
-  // },
+  activated() {
+    this.initScroll();
+  },
   methods: {
     async initData() {
       this.TopPlaylists("全部");
-      this.TopPlaylists("华语");
-      this.TopPlaylists("欧美");
-      this.TopPlaylists("民谣");
-      this.TopPlaylists("电子");
-      this.TopPlaylists("怀旧");
     },
     async TopPlaylists(type) {
       const { data: res } = await getTopPlaylists({ limit: 30, cat: type });
@@ -77,33 +72,38 @@ export default {
       const data = await getTopPlaylistshigh({ limit: 1, cat: type });
       // console.log(data);
     },
+    initScroll() {
+      this.$nextTick(() => {
+        this.$refs.scroll.scroll.refresh();
+      });
+    },
 
     tabClick(index) {
-      this.$refs.scroll.scroll.refresh();
       switch (index) {
         case 0:
           this.currentType = "全部";
           // console.log(this.currentType);
+          this.TopPlaylists("全部");
           break;
         case 1:
           this.currentType = "华语";
-          // console.log(this.currentType);
+          this.TopPlaylists("华语");
           break;
         case 2:
           this.currentType = "欧美";
-          // console.log(this.currentType);
+          this.TopPlaylists("欧美");
           break;
         case 3:
           this.currentType = "民谣";
-          // console.log(this.currentType);
+          this.TopPlaylists("民谣");
           break;
         case 4:
           this.currentType = "电子";
-          // console.log(this.currentType);
+          this.TopPlaylists("电子");
           break;
         case 5:
           this.currentType = "怀旧";
-          // console.log(this.currentType);
+          this.TopPlaylists("怀旧");
           break;
       }
     }
