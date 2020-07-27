@@ -3,7 +3,7 @@
     <van-popup v-model="show" round position="bottom" :style="{ height: '40%' }" >内容</van-popup>
 
 
-    <DetailNavbar :description="playlist.description" :coverimg="playlist.coverImgUrl"></DetailNavbar>
+    <DetailNavbar :description="playlist.description"></DetailNavbar>
     <Scroll :probeType="3" class="content" ref="scroll" :pull-up-load="true">
       <AuthorMsg
         :coverimg="playlist.coverImgUrl"
@@ -60,6 +60,7 @@ import { getSongDetail } from "network/api";
 
 import Scroll from "components/common/Scroll";
 import { Popup } from 'vant';
+
 export default {
   name: "PlaylistDetail",
   async created() {
@@ -114,20 +115,20 @@ export default {
       // console.log(this.songs);
     },
     async playAudio(song, index) {
-      // this.$refs.audio.pause();
       const songurl = await getSongUrl(song.id);
-      // console.log(songurl.data.data[0].url);
-      
-      let currentPlay = {};
+      // console.log(song);
+      const currentPlay = {};
       currentPlay.url = songurl.data.data[0].url
       currentPlay.id = song.id;
       currentPlay.singer = song.ar[0].name;
       currentPlay.albumPic = song.al.picUrl;
       currentPlay.name = song.name;
-      this.$store.commit("play");
       this.$store.commit("addToCurrentPlay", currentPlay);
       this.$store.dispatch("AddToPlayList", currentPlay);
+      this.$store.commit("play");
       this.currentIndex = index;
+      // console.log(this.$storage.set(index,currentPlay));
+      // console.log(this.$storage.get(index,currentPlay));
     },
     showPopup(){
       this.show = true;
@@ -141,11 +142,11 @@ export default {
   position: relative;
 }
 .content {
-  height: calc(100vh - 50px - 45px);
+  height: calc(100vh - 50px);
   overflow: hidden;
   position: absolute;
   top: 50px;
-  bottom: 0;
+  bottom: 45px;
   left: 0;
   right: 0;
 }

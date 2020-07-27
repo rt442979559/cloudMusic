@@ -67,9 +67,11 @@ export default {
   position: relative;
 }
 .content {
-  height: calc(100vh - 135px);
+  height: calc(100vh - 90px);
   overflow: hidden;
   position: absolute;
+  top: 0;
+  bottom: 50px;
 }
 .rankitem {
   height: 16vh;

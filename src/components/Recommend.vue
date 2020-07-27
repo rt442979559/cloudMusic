@@ -36,6 +36,12 @@ export default {
   methods: {
     toTopPlayList(index){
       switch (index) {
+        case 0: 
+          this.$message('未开发~');
+          break;
+        case 1: 
+          this.$message('未开发~');
+          break;
         case 2:
           this.$router.push('/songcate')
           this.$store.commit('changeNavIndex',1)

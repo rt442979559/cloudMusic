@@ -1,0 +1,205 @@
+{
+  "id": "1955049",
+  "name": "music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1027000",
+      "name": "music-menu",
+      "font_class": "music-menu",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "4864023",
+      "name": "loop_one",
+      "font_class": "loop",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "11363849",
+      "name": "rank",
+      "font_class": "rank",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "557232",
+      "name": "comment 2.1",
+      "font_class": "comment21",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    },
+    {
+      "icon_id": "4130593",
+      "name": "dustbin",
+      "font_class": "delete",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "6300244",
+      "name": "Share",
+      "font_class": "share",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    },
+    {
+      "icon_id": "8635367",
+      "name": "download",
+      "font_class": "download",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "10680423",
+      "name": "more read",
+      "font_class": "more",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "13476498",
+      "name": "check-box-outline",
+      "font_class": "checkbox",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "3015738",
+      "name": "list",
+      "font_class": "list",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "8789464",
+      "name": "list",
+      "font_class": "list1",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "1906309",
+      "name": "PLAY",
+      "font_class": "mini_play",
+      "unicode": "e6f9",
+      "unicode_decimal": 59129
+    },
+    {
+      "icon_id": "4237607",
+      "name": "pause",
+      "font_class": "mini_pause",
+      "unicode": "e6c3",
+      "unicode_decimal": 59075
+    },
+    {
+      "icon_id": "8712718",
+      "name": "pause",
+      "font_class": "player-pause",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "10246365",
+      "name": "music",
+      "font_class": "nav_mine",
+      "unicode": "e6b2",
+      "unicode_decimal": 59058
+    },
+    {
+      "icon_id": "12110605",
+      "name": "Menus",
+      "font_class": "Menus",
+      "unicode": "e6c0",
+      "unicode_decimal": 59072
+    },
+    {
+      "icon_id": "16141310",
+      "name": "nav-video",
+      "font_class": "nav-video",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "16141311",
+      "name": "nav_home",
+      "font_class": "nav_home",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "322915",
+      "name": "search",
+      "font_class": "search_1",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "1690225",
+      "name": "music_radio_portable",
+      "font_class": "music_radio",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "7594038",
+      "name": "24gl-next",
+      "font_class": "next",
+      "unicode": "ea6b",
+      "unicode_decimal": 60011
+    },
+    {
+      "icon_id": "7766748",
+      "name": "icon_horn",
+      "font_class": "horn",
+      "unicode": "eb96",
+      "unicode_decimal": 60310
+    },
+    {
+      "icon_id": "8326826",
+      "name": "Search",
+      "font_class": "Search",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "14538939",
+      "name": "headphones_filled",
+      "font_class": "headphones",
+      "unicode": "e6cf",
+      "unicode_decimal": 59087
+    },
+    {
+      "icon_id": "14629229",
+      "name": "playing",
+      "font_class": "player-play",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "16009357",
+      "name": "playing-sequence",
+      "font_class": "playing-sequence",
+      "unicode": "e87c",
+      "unicode_decimal": 59516
+    },
+    {
+      "icon_id": "16009358",
+      "name": "playing-random",
+      "font_class": "playing-random",
+      "unicode": "e87d",
+      "unicode_decimal": 59517
+    },
+    {
+      "icon_id": "16145356",
+      "name": "24gl-next",
+      "font_class": "prev",
+      "unicode": "eb97",
+      "unicode_decimal": 60311
+    }
+  ]
+}

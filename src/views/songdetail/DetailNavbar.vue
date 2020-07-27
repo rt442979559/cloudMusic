@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "DetailNavbar",
-  props:["description","coverimg"],
+  props:["description"],
   methods: {
       backClick(){
           this.$router.back();

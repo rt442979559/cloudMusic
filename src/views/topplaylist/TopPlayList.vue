@@ -75,7 +75,7 @@ export default {
   justify-content: space-around;
 }
 .content {
-  height: calc(100vh - 95px);
+  height: calc(100vh - 45px);
   overflow: hidden;
   position: absolute;
   top: 45px;

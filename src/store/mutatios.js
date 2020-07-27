@@ -37,12 +37,21 @@ export default {
     },
 
     play(state) {
-        state.playing = true
-        console.log('play');
+        if(state.songList.length > 0){
+            state.playing = true;
+            console.log('play');
+        }
+        else return
     },
     pause(state) {
-        state.playing = false
-        console.log('pause');
+        if(state.songList.length > 0){
+            state.playing = false;
+            console.log('pause');
+        }
+    },
+    setCurrentTime(state, data) { //设置播放进度
+        state.currentTime = data;
+        // console.log(state.currentTime);
     },
 
     

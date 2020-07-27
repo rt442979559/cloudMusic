@@ -12,17 +12,15 @@
 </template>
 
 <script>
-// import { Lazyload } from 'vant';
 export default {
-  // components:{ Lazyload },
-  props: ["id", "img", "name", "playcount",],
+  props: ["id", "img", "name", "playcount"],
   created() {
     this.calcWidth;
   },
   data() {
     return {
       activeColor:'red',
-      widthVW: 47
+      widthVW: 47,
     }
   },
   methods: {

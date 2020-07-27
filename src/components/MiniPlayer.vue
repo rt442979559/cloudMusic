@@ -1,14 +1,16 @@
 <template>
-  <div id="miniplay" >
+  <div id="miniplay" v-if="songList.length > 0">
     <div id="player">
       <van-popup v-model="playerShow"  id="playerpopup" >
-        <div class="playernavbar">
+        <div class="playernavbar" >
           <span class="playerback" @click.stop="playerback">back</span>
           <span class="playersongtitle">
             <span>{{currentPlay.name}}</span>
             <span>{{currentPlay.singer}}</span>
           </span>
-          <span class="playershare" @click="showShare = true">share</span>
+          <span class="playershare" @click="showShare = true">
+            <i class="iconfont icon-share"></i>
+          </span>
         </div>
         <van-share-sheet class="sharetanchu"
           v-model="showShare"
@@ -16,8 +18,9 @@
           :options="options"
           @select="onSelect"
           />
+          <!-- 中间的图片区 -->
         <div class="middle"  @click="showLyric">
-          <div v-show="!lyricIsShow">
+          <div v-show="!lyricIsShow" class="lyric">
             <div>{{this.currentLyric}}</div>
           </div>
         <div class="playerrecord" v-show="lyricIsShow">
@@ -26,84 +29,125 @@
             <!-- <img src="~assets/img/player/playbar.png" alt=""> -->
           </div>
           <div class="playerdemo" :class="{start:isPlaying,pause:isPaused}">
-            <img :src="currentPlay.albumPic" alt="">
+            <img :src="currentPlay.albumPic" v-lazy="currentPlay.albumPic" alt="">
           </div>
         </div>
         </div>
+        <!-- 进度条 -->
+        <div id="progress">
+          <div class="currenttime">{{formattime}}</div>
+          <div class="progresswrapper"  >
+            <!-- <div class="progressbar"  v-if="playcurrenttime"
+            :style="{width: playcurrenttime * 0.7 + '%'}">-</div> -->
+            <van-slider v-model="playcurrenttime"
+             @change="changProgress"
+             active-color="#e5473b"
+             inactive-color="grey"
+             button-size="14px">
+              <template #button>
+                <div class="custom-button" />
+              </template>
+            </van-slider>
+          </div>
+          <div class="duration">{{formatDuration}}</div>
+        </div>
+        
+        <!-- player控制台 -->
         <div class="playerconsole">
           <div class="playermode">
-            <img src="~assets/img/player/loop.png" >
+            <i class="iconfont icon-loop"></i>
           </div>
           <div class="lastsong" @click="lastSongClick">
-            <img src="~assets/img/player/playerprev.png" >
+            <i class="iconfont icon-prev"></i>
           </div>
           <div class="playerplay" @click="toggleStatus">
-            <img src="~assets/img/player/playing.png" v-if="!playing">
-            <img src="~assets/img/player/pause1.png" v-else>
+            <i class="iconfont icon-player-play" v-if="!playing"></i>
+            <i class="iconfont icon-player-pause" v-else></i>
           </div>
           <div class="nextsong" @click="nextSongClick">
-            <img src="~assets/img/player/playernext.png" >
+            <i class="iconfont icon-next"></i>
           </div>
           <div class="playerlist" @click="showPopup">
-            <img src="~assets/img/player/list2.png" >
+            <i class="iconfont icon-list1"></i>
           </div>
         </div>
       </van-popup>
     </div>
 
 
-    <div class="songimg"><img :src="currentPlay.albumPic" alt=""></div>
+    <div class="songimg" @click="playerFullScreen"><img :src="currentPlay.albumPic" v-lazy="currentPlay.albumPic" alt=""></div>
                                   <!-- 打开全屏 -->
-    <div class="songname" @click="playerFullScreen" >
+    <div @click="playerFullScreen"  class="songname">
       <span>
         {{currentPlay.name}}
       </span>
     </div>
     <div class="play" @click="toggleStatus">
-      <img src="~assets/img/player/toplay.png" v-show="!playing">
-      <img src="~assets/img/player/pause2.png" >
+      <!-- 圆形进度条 -->
+      <van-circle size="32px" class="playCircle" 
+      :layer-color="playing? '#ebedf0': '#a2a3a3'" 
+      v-model="playcurrenttime" 
+      :rate="0"  
+      :color="gradientColor">
+        <i class="iconfont icon-mini_play"  v-if="!playing"></i>
+        <i class="iconfont icon-mini_pause" v-else></i>
+      </van-circle>
     </div>
     <div class="songlist" @click="showPopup">
-      <img src="~assets/img/player/list.png" >
+      <i class="iconfont icon-list"></i>
     </div>
     <!-- 底部弹出的播放列表 -->
     <div class="popup">
       <van-popup v-model="show" position="bottom" 
-        :style="{ height: '52%' }" closeable close-icon="close">
-          list
+        :style="{ height: '50%' }" close-on-popstate safe-area-inset-bottom>
+          <div class="popuptitle">list</div>
         <div v-for="(item,index) in songList" :key="index" class="popupList" @click="listItemClick(index)"
         :class="{active:currentPlay.id === item.id}">
           <div >
             <span v-show="currentPlay.id === item.id"><img src="~assets/img/player/horn.png" ></span>
-            <span class="popupName">{{item.name}}</span>-
+            <span class="popupName">{{item.name}}</span> -
             <span class="popupSinger">{{item.singer}}</span>
             <!-- 阻止冒泡 -->
-            <span class="itemRemove" @click.stop="itemRemove(item.id)">X</span>
+            <span class="itemRemove" @click.stop="itemRemove(item.id)">╳</span>
           </div>
         </div>
       </van-popup>
     </div>
 
     <audio ref="audio" :src="currentPlay.url" @play="start"
-     @pause="pauses" @ended="end"
-     autoplay loop></audio>
+     @pause="pauses" @ended="end" 
+     @timeupdate="timeupdate"
+     autoplay loop ></audio>
   </div>
 </template>
 
 <script>
-import { Popup , ShareSheet } from 'vant';
-import { mapState, mapMutations, mapActions,mapGetters } from "vuex";
+import { Popup , ShareSheet , Circle , Slider } from 'vant';
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import { getSongLyric } from 'network/api'
+import { formatTime } from '../utils/format'
 export default {
   name: "MiniPlay",
-  components:{[Popup.name]:Popup,[ShareSheet.name]:ShareSheet},
+  components:{[Popup.name]:Popup,
+              [ShareSheet.name]:ShareSheet,
+              [Circle.name]:Circle,
+              [Slider.name]:Slider},
   computed: {
-    ...mapState(["currentPlay","playing","songList","currentIndex"]),
+    ...mapState(["currentPlay","playing","songList","currentIndex","currentTime"]),
     ...mapGetters(["songUrl"]),
-    getShow(){
-      console.log(this.popupIsShow);
+    //把当前时间转化为百分比
+    playcurrenttime:{
+      get(){
+        return parseInt(((this.currentTime / this.duration) *100).toFixed(0));
+      },
+      set(){}
     },
-    
+    formattime(){
+      return formatTime(this.currentTime);
+    },
+    formatDuration(){
+      return formatTime(this.duration);
+    },
   },
   
   methods: {
@@ -148,7 +192,7 @@ export default {
         this.$store.commit('pause')
         this.isPlaying = true;
       }
-      else{
+      else if(!this.playing){
         this.$refs.audio.play()
         this.$store.commit('play')
         this.isPaused = true
@@ -182,14 +226,36 @@ export default {
       Toast(option.name);
       this.showShare = false;
     },
+    //audio自带的播放事件 用来监听播放时长
+    timeupdate(e) {
+      this.duration = e.target.duration;
+      // console.log(this.duration);
+      // 这个playCurrentTime是vuex中的
+      this.setCurrentTime(e.target.currentTime.toFixed(2));
+    },
+    //改变播放进度条
+    changProgress(e){
+      // console.log(e);
+      const time = Math.floor((e * this.duration) / 100);
+      // console.log(time);
+      this.$refs.audio.currentTime = time;
 
-    ...mapMutations(["play","pause","playNextSong","playLastSong"])
+      // 写完才发现有现成的轮子 o(╥﹏╥)o
+      // console.log(e.offsetX);
+      // const percent = Math.floor(e.offsetX / window.innerWidth * 100) / 70;
+      // // console.log(percent);
+      // const newTime = this.duration * percent;
+      // this.$refs.audio.currentTime = newTime;
+    },
+    ...mapMutations(["play","pause","playNextSong","playLastSong","setCurrentTime"])
   },
 
   data() {
     return {
       show:false,
+      //大播放器显示
       playerShow:false,
+      //分享显示
       showShare: false,
       currentLyric:'',
       options: [
@@ -199,9 +265,16 @@ export default {
         { name: '分享海报', icon: 'poster' },
         { name: '二维码', icon: 'qrcode' },
       ],
+      //歌词显示
       lyricIsShow:true,
       isPlaying:false,
       isPaused:false,
+      //当前播放音乐的总时长
+      duration:0,
+      gradientColor:{
+        '0%': '#e5473b',
+        '100%': 'skyblue',
+      }
     }
   },
 };
@@ -212,7 +285,8 @@ export default {
 #playerpopup{
   /* 关于ihpone6机型：宽度不设置100vw以上，左边有条线*/
   /* 高度不管设置多少，上边都有条线，至今未解决 ~o(╥﹏╥)o */
-  width: 100.3vw;
+
+  width: 100vw;
   height:100vh;
   background-image: radial-gradient(43% 116% at top center, #535353 5% , #464646 18%, rgb(27, 26, 26)70%);
 }
@@ -252,13 +326,13 @@ export default {
 }
 
 .middle{
-  height: 73vh;
+  height: 60vh;
   color: white;
   font-size: 3.889vw;
   overflow: hidden;
 }
 .playerrecord{
-  height: 68vh;
+  height: 60vh;
   overflow: hidden;
   /* background-color: skyblue; */
 }
@@ -267,9 +341,9 @@ export default {
 }
 .playerrecord .playerdemo{
   position: relative;
-  margin: 11.111vw auto 0;
-  width: 80%;
-  padding-top: 80%;
+  margin: 10vw auto 0;
+  width: 70%;
+  padding-top: 70%;
   height: 0;
   border-radius: 100%;
   box-sizing: border-box;
@@ -278,44 +352,97 @@ export default {
   background-size: 100% 100%;
   overflow: hidden;
   /* animation:turn 60s infinite; */
-  border: 3px solid rgba(66, 66, 66);
+  border: 3px solid rgba(66, 66, 66) ;
 }
 .playerrecord .playerdemo img{
-  width:70%;
+  width:65%;
   border-radius: 50%;
-  transform: translateY(-122%);
+  transform: translateY(-128%);
 }
+/* 进度条 */
+#progress{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 35vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 3.333vw;
+  text-align: center;
+}
+.progresswrapper{
+  background-color: rgb(168, 168, 168);
+  height: 0.556vw;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(179, 177, 177);
+  width: 70%;
+}
+/* .progressbar{
+  background-color: rgb(216, 25, 57);
+  font-size: 3.333vw;
+  position: absolute;
+  text-align: right;
+  line-height: 0.556vw;
+  color: rgba(216, 25, 57,.0);
+}
+.progressbar::after{
+  content: '';
+  width: 1.111vw;
+  height: 1.111vw;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  border: 1.667vw solid white;
+} */
+.custom-button{
+  width: 1.111vw;
+  height: 1.111vw;
+  background-color: #e5473b;
+  border: 1.667vw solid white;
+  border-radius: 50%;
+}
+.currenttime{
+  margin-left: 3%;
+  transform: scale(0.9);
+}
+.duration{
+  margin-right: 3%;
+  transform: scale(0.9);
+}
+
 
 .playerconsole{
   position: fixed;
   bottom: 0;
   width: 100%;
-  height:11%;
+  height:15vh;
   color: white;
   /* background-color: skyblue; */
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
 }
-.playerconsole img{
-  width: 40%;
-  vertical-align: middle;
-}
-.playerplay img{
-  width: 60%;
+.playerconsole div{
+  flex:1;
 }
 
 /* 小播放器 */
 #miniplayer {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  bottom: 0px;
   z-index: 1000;
   height: 45px;
   width: 100%;
   background-color: white;
   display: flex;
-  line-height: 45px;
   text-align: center;
-  /* opacity:0.9; */
+  align-items: center;
+  border-top: 1px solid rgba(240, 239, 239,.8);
+  overflow: hidden;
 }
 .songimg {
   flex: 1;
@@ -324,12 +451,14 @@ export default {
   flex: 5;
   font-size: 12px;
   text-align: left;
+  line-height: 45px;
 }
 .play {
   flex: 1;
 }
 .songlist {
   flex: 1;
+  margin-right: 5px;
 }
 .songimg img{
   width: 35px;
@@ -337,11 +466,9 @@ export default {
   border-radius: 8px;
   vertical-align: middle;
 }
-.play img{
-  width: 30px;
-  vertical-align: middle;
-  height: 30px;
-}
+/* .play img{
+  width: 100%;
+} */
 .songlist img{
   width: 35px;
   vertical-align: middle;
@@ -354,12 +481,16 @@ export default {
 
 .popupList{
   text-align: left;
-  border-bottom: 1px solid rgb(236, 235, 235);
+  border-top: 1px solid rgb(236, 235, 235);
   opacity: .9;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: flex;
+  line-height: 45px;
+}
+.popuptitle{
+  line-height: 40px;
 }
 .popupList img{
   height:14px;
@@ -379,10 +510,11 @@ export default {
   right: 10px;
   font-size: 13px;
 }
-/* @keyframes turn{
-  0%{-webkit-transform:rotate(0deg);}
-  100%{-webkit-transform:rotate(360deg);}
-} */
+.playCircle {
+  margin-top: 4px;
+}
+
+
 @-webkit-keyframes rotation{
   from{transform:rotate(0deg);}
   to{transform:rotate(360deg);}

@@ -3,11 +3,13 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store'
 import 'assets/css/normalize.css'
+import 'assets/icon/iconfont.css'
 import VueLazyLoad from 'vue-lazyload'
-import { Lazyload } from 'vant';
+import { Lazyload , Toast } from 'vant';
 import $http from './network/request'
 import 'babel-polyfill';
-import FastClick from 'fastclick'
+import FastClick from 'fastclick';
+import storage from 'good-storage'
 
 
 Vue.config.debug = true;
@@ -22,10 +24,11 @@ Vue.use(VueLazyLoad,{
   loading:require('./assets/img/cat.jpg')
 })
 
-
+Vue.use(Toast);
+Vue.prototype.$message = Toast;
+Vue.prototype.$storage = storage;
 //移动端300ms延迟
 FastClick.attach(document.body)
-
 
 Vue.config.productionTip = false
 

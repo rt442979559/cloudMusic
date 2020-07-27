@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getSearchSong, getSearchHot, getSearchDefault } from "network/search";
+import { getSearchSong, getSearchHot, getSearchDefault, getSearchSuggest } from "network/search";
 import { getSongDetail, getSongUrl } from "network/api";
 import { Search } from "vant";
 import SearchHot from "./SearchHot";
@@ -47,6 +47,7 @@ export default {
   async created() {
     this.searchDefault();
     this.initSearchHot();
+    
   },
   mounted() {
     this.$nextTick(() => {
@@ -56,6 +57,11 @@ export default {
   methods: {
     searchback() {
       this.$router.back();
+    },
+    //关键词提示
+    async searchSuggest(){
+      const {data:res} = await getSearchSuggest(this.value.trim())
+      console.log(res);
     },
     //搜索默认
     async searchDefault() {
@@ -72,9 +78,7 @@ export default {
         // console.log(this.searchResList);
         this.isShow = false;
       } else {
-        const {
-          data: { result: list }
-        } = await getSearchSong(this.placeHolder.trim()).catch(err => err);
+        const {data: { result: list }} = await getSearchSong(this.placeHolder.trim()).catch(err => err);
         this.searchResList = list.songs;
         // console.log(this.searchResList);
         this.isShow = false;
@@ -115,6 +119,9 @@ export default {
       // console.log(newVal);
       if (newVal === "") {
         this.isShow = false;
+      }
+      else{
+        this.searchSuggest();
       }
     }
   }
@@ -169,11 +176,11 @@ export default {
   margin-right: 2vw;
 }
 .content {
-  height: calc(100vh - 90px - 45px);
+  height: calc(100vh - 90px );
   overflow: hidden;
   position: absolute;
   top: 85px;
-  bottom: 0;
+  bottom: 45px;
   left: 0;
   right: 0;
 }

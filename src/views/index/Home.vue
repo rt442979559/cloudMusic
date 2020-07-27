@@ -124,7 +124,7 @@ export default {
           this.count = 0;
           this.$refs.personalized.getPersonalized(this.count * 6,(this.count + 1) * 6);
         }
-        this.$refs.scroll.scroll.refresh();
+        this.initScroll();
       }, 1000);
     },
     initScroll() {
@@ -142,12 +142,13 @@ export default {
   overflow: hidden;
 }
 .content {
-  height: calc(100vh - 90px - 45px);
+  height: calc(100vh - 90px);
   overflow: hidden;
   position: absolute;
   top: 90px;
   bottom: 0px;
   left: 0;
   right: 0;
+  overflow: hidden;
 }
 </style>

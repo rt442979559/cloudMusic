@@ -121,11 +121,11 @@ export default {
   justify-content: space-around;
 }
 .content {
-  height: calc(100vh - 180px);
+  height: calc(100vh - 135px);
   overflow: hidden;
   position: absolute;
   top:44px;
-  bottom:0px;
+  bottom:45px;
   left: 0;
   right: 0;
 }
