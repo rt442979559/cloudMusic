@@ -3,8 +3,8 @@
     <van-popup v-model="show" round position="bottom" :style="{ height: '40%' }" >内容</van-popup>
 
 
-    <DetailNavbar :description="playlist.description"></DetailNavbar>
-    <Scroll :probeType="3" class="content" ref="scroll" :pull-up-load="true">
+    <DetailNavbar :description="playlist.description" :changeContext="changeContext" :name="playlist.name"></DetailNavbar>
+    <Scroll :probeType="3" class="content" ref="scroll" :pull-up-load="true" @scroll="contentScroll">
       <AuthorMsg
         :coverimg="playlist.coverImgUrl"
         :name="playlist.name"
@@ -14,7 +14,7 @@
         :description="playlist.description"
         :commentCount="playlist.commentCount"
       ></AuthorMsg>
-      <div class="playall">
+      <div class="playall" ref="playlist">
         <span class="songlength">播放全部 (共{{songs.length}}首)</span>
         <span class="collect">+ 收藏({{playlist.subscribedCount}})</span>
       </div>
@@ -25,9 +25,8 @@
         v-for="(item,index) in songs"
         :key="index"
         :class="{active:currentIndex===index}"
-        v-if="Object.keys(songs).length !==0"
       >
-        <div class="songswrapper" @click="playAudio(item,index)">
+        <div class="songswrapper" @click.stop="playAudio(item,index)">
           <!-- <div class="songsindex">
           <span :class="{active:currentIndex===index}">
             <img src="~assets/img/player/pause2.png" v-show="currentIndex===index">
@@ -67,6 +66,10 @@ export default {
     this.getSongData();
   },
   mounted() {
+    this.$nextTick(()=>{
+      this.listOffsetTop = this.$refs.playlist.offsetTop;
+      // console.log(this.listOffsetTop);
+    });
     this.$nextTick(() => {
       this.$refs.scroll.scroll.refresh();
     });
@@ -85,6 +88,8 @@ export default {
       songs: [],
       currentIndex: null,
       show: false,
+      listOffsetTop:0,
+      changeContext:false,
     };
   },
   components: { DetailNavbar, AuthorMsg, Scroll,[Popup.name]:Popup},
@@ -125,19 +130,35 @@ export default {
       currentPlay.name = song.name;
       this.$store.commit("addToCurrentPlay", currentPlay);
       this.$store.dispatch("AddToPlayList", currentPlay);
-      this.$store.commit("play");
+      
+      // if (!currentPlay.id) {
+      //   return
+      // }else{
+      //   await this.$store.commit("play");
+      // }
       this.currentIndex = index;
       // console.log(this.$storage.set(index,currentPlay));
       // console.log(this.$storage.get(index,currentPlay));
     },
     showPopup(){
       this.show = true;
+    },
+    // 页面滚动触发navbar事件
+    contentScroll(position){
+      // console.log(position);
+      if(position.y < (-this.listOffsetTop)){
+        this.changeContext = true;
+        // console.log(this.changeContext);
+      }else{
+        this.changeContext = false;
+        // console.log(this.changeContext);
+      }
     }
   }
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 #playlistdetail {
   position: relative;
 }
@@ -231,4 +252,5 @@ export default {
 .active {
   color: rgb(209, 5, 49);
 }
+
 </style>

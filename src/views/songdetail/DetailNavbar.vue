@@ -2,9 +2,11 @@
   <div class="detailNavbar" >
     <div class="back" @click="backClick">back</div>
     <div class="title">
-      <div class="box1">歌单</div>
+      <div class="box1" v-if="!changeContext">歌单</div>
+      <div class="box3" v-else="changeContext">{{name}}</div>
       <div class="box2">{{description}}</div>
     </div>
+    
     <div class="search">search</div>
     <div class="sort">sort</div>
   </div>
@@ -13,11 +15,12 @@
 <script>
 export default {
   name: "DetailNavbar",
-  props:["description"],
+  props:["description","changeContext","name"],
   methods: {
       backClick(){
           this.$router.back();
-      }
+      },
+
   },
 };
 </script>
@@ -62,6 +65,15 @@ export default {
   white-space: nowrap;
   margin-top: 5px;
   opacity: 0.5;
+}
+.title .box3{
+  flex: 1;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.8;
+  padding-top: 5px;
 }
 
 .search {

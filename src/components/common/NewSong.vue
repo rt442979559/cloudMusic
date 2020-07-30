@@ -3,7 +3,7 @@
   <div class="newsong" ref="newsong">
     <div class="listcontent" ref="content">
       <div class="listitem" v-for="item in newSongList" ref="listitem" :key="item.id">
-        <img :src="item.picUrl" alt v-lazy="item.picUrl" />
+        <img :src="item.picUrl + '?param=200y200'" alt />
         <span class="listitemspan">{{item.name}}</span>
       </div>
     </div>

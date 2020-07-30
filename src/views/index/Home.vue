@@ -1,12 +1,12 @@
 <template>
   <div id="Home" class="wrapper" ref="wrapper">
-    <Scroll :probeType="3" class="content" ref="scroll" 
-    :pullUpLoad="true">
+    <Scroll :probeType="3" class="content" ref="scroll" >
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
       <Banners></Banners>
       <Recommend></Recommend>
       <Personalized ref="personalized"></Personalized>
       <PersonalizedNewSong></PersonalizedNewSong>
+    </van-pull-refresh>
       <ul>
         <li>1</li>
         <li>1</li>
@@ -76,7 +76,6 @@
         <li>1</li>
         <li>1</li>
       </ul>
-    </van-pull-refresh>
     </Scroll>
   </div>
 </template>

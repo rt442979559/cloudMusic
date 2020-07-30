@@ -1,6 +1,6 @@
 <template>
   <div class="playcarditem" @click="cardClick" :style="{width: calcWidth + 'vw' }">
-    <img :src="img" class="playcardimg" :style="{width: calcWidth + 'vw'}" v-lazy="img" alt />
+    <img :src="img +'?param=200y200'" class="playcardimg" :style="{width: calcWidth + 'vw'}" v-lazy="img" alt />
     <div class="counte">
       <img src="~assets/img/author/headphones.png"  alt />
       {{playCount}}

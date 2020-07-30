@@ -81,6 +81,9 @@ export default {
         //     this.scroll && this.scroll.refresh()
         //     console.log('hi');
         // },
+         scrollToElement() {
+            this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
+        }
         
     },
 }
